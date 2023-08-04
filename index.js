@@ -10,14 +10,14 @@ const app = express();
 const cors = require("cors");
 app.use(
   cors({
-    origin: "https://blog-app-two-delta.vercel.app/",
+    origin: "https://blog-app-two-delta.vercel.app",
     credentials: true,
   })
 );
 app.use(function (req, res, next) {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://blog-app-two-delta.vercel.app/"
+    "https://blog-app-two-delta.vercel.app"
   ); // Replace with your client's domain
   res.setHeader("Access-Control-Allow-Credentials", "true");
   next();
@@ -25,13 +25,28 @@ app.use(function (req, res, next) {
 app.options("*", function (req, res) {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://blog-app-two-delta.vercel.app/"
+    "https://blog-app-two-delta.vercel.app"
   ); // Replace with your client's domain
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.sendStatus(200);
 });
+
+// Allow requests from a specific origin (in this case, 'https://blog-app-two-delta.vercel.app')
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://blog-app-two-delta.vercel.app"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 
 const PORT = process.env.port || 3001;
 app.use(express.json());
